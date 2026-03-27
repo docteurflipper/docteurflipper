@@ -154,6 +154,49 @@ ul { list-style: none; }
 }
 .btn-nav:hover { background: var(--accent-dark) !important; }
 
+/* ===== HEADER ACTIONS ===== */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.btn-call {
+  background: var(--accent);
+  color: var(--dark);
+}
+.btn-call:hover {
+  background: var(--accent-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(245,166,35,0.4);
+}
+
+.btn-messenger {
+  background: #0084ff;
+  color: #fff;
+}
+.btn-messenger:hover {
+  background: #006fd6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,132,255,0.4);
+}
+
 .burger {
   display: none;
   flex-direction: column;
@@ -626,6 +669,43 @@ h1 {
 }
 
 /* ===== TESTIMONIALS ===== */
+.testimonials-sub {
+  text-align: center;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 40px;
+  margin-top: -40px;
+}
+
+.testimonials-cta {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.btn-fb-reviews {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: #1877f2;
+  color: #fff;
+  border-radius: 50px;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+.btn-fb-reviews:hover {
+  background: #1464d8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(24,119,242,0.4);
+}
+
 #testimonials {
   padding: 100px 0;
   background: var(--dark);
@@ -837,7 +917,13 @@ h1 {
   .footer-brand { grid-column: 1 / -1; }
 }
 
+@media (max-width: 1024px) {
+  .btn-action span { display: none; }
+  .btn-action { padding: 8px 12px; }
+}
+
 @media (max-width: 768px) {
+  .header-actions { gap: 6px; }
   .burger { display: flex; }
 
   #nav {
