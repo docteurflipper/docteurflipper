@@ -59,7 +59,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll(
-  '.service-card, .machine-card, .testimonial-card, .stat, .about-feature, .contact-item'
+  '.service-card, .machine-card, .testimonial-card, .about-feature, .contact-item'
 ).forEach((el, i) => {
   el.style.opacity = '0';
   el.style.transform = 'translateY(24px)';
@@ -124,21 +124,19 @@ function animateCounter(el, from, to, duration, suffix) {
 }
 
 const statsSection = document.getElementById('stats');
+let statsAnimated = false;
 
 const statsObserver = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
+  if (entries[0].isIntersecting && !statsAnimated) {
+    statsAnimated = true;
     document.querySelectorAll('.stat-num[data-target]').forEach((el, i) => {
       const to = parseInt(el.dataset.target);
       const from = parseInt(el.dataset.from || 0);
       const suffix = el.dataset.suffix || '';
-      const duration = 1800 - i * 100;
-
-      el.style.animation = 'statPop 0.4s ease forwards';
-      setTimeout(() => animateCounter(el, from, to, duration, suffix), i * 150);
+      setTimeout(() => animateCounter(el, from, to, 1500, suffix), i * 200);
     });
-    statsObserver.disconnect();
   }
-}, { threshold: 0.5 });
+}, { threshold: 0.2 });
 
 statsSection && statsObserver.observe(statsSection);
 
