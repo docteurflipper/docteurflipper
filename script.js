@@ -78,20 +78,32 @@ document.addEventListener('DOMContentLoaded', () => {
 const form = document.getElementById('contactForm');
 const successMsg = document.getElementById('form-success');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const btn = form.querySelector('button[type="submit"]');
   btn.textContent = 'Envoi en cours...';
   btn.disabled = true;
 
-  // Simulate send (no backend)
-  setTimeout(() => {
-    form.reset();
-    btn.textContent = 'Envoyer ma demande';
-    btn.disabled = false;
-    successMsg.classList.remove('hidden');
-    setTimeout(() => successMsg.classList.add('hidden'), 5000);
-  }, 1000);
+  try {
+    const response = await fetch('https://formspree.io/f/xeepovbg', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.reset();
+      successMsg.classList.remove('hidden');
+      setTimeout(() => successMsg.classList.add('hidden'), 6000);
+    } else {
+      alert('Une erreur est survenue. Veuillez réessayer ou nous appeler au 06 99 61 62 94.');
+    }
+  } catch {
+    alert('Erreur réseau. Veuillez réessayer ou nous appeler au 06 99 61 62 94.');
+  }
+
+  btn.textContent = 'Envoyer ma demande';
+  btn.disabled = false;
 });
 
 // ===== STAT COUNTER ANIMATION =====
