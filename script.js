@@ -107,13 +107,34 @@ form.addEventListener('submit', async (e) => {
 });
 
 // ===== STAT COUNTER ANIMATION =====
-const statNums = document.querySelectorAll('.stat-num');
+function animateCounter(el, from, to, duration, suffix) {
+  const range = to - from;
+  const startTime = performance.now();
+
+  function update(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+    const current = Math.round(from + range * eased);
+    el.textContent = current + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+
+  requestAnimationFrame(update);
+}
+
 const statsSection = document.getElementById('stats');
 
 const statsObserver = new IntersectionObserver((entries) => {
   if (entries[0].isIntersecting) {
-    statNums.forEach(el => {
+    document.querySelectorAll('.stat-num[data-target]').forEach((el, i) => {
+      const to = parseInt(el.dataset.target);
+      const from = parseInt(el.dataset.from || 0);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800 - i * 100;
+
       el.style.animation = 'statPop 0.4s ease forwards';
+      setTimeout(() => animateCounter(el, from, to, duration, suffix), i * 150);
     });
     statsObserver.disconnect();
   }
@@ -121,7 +142,6 @@ const statsObserver = new IntersectionObserver((entries) => {
 
 statsSection && statsObserver.observe(statsSection);
 
-// Inject stat animation
 const statStyle = document.createElement('style');
 statStyle.textContent = `
   @keyframes statPop {
